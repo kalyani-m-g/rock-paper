@@ -2,43 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Rock Paper Scissors</title>
+  <title>Fire Grass Water Game</title>
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 50px; }
-    button { font-size: 2rem; padding: 10px 20px; margin: 5px; cursor: pointer; }
-    #result { margin-top: 20px; font-size: 1.5rem; }
+    body { text-align: center; font-family: sans-serif; padding: 50px; }
+    button { font-size: 2rem; margin: 0 10px; padding: 10px 20px; cursor: pointer; }
+    #result { margin-top: 30px; font-size: 1.5rem; }
   </style>
 </head>
 <body>
-  <h1>Rock Paper Scissors</h1>
+  <h1>Fire 🌾 Water Element Battle</h1>
   <div>
-    <button data-choice="rock">✊ Rock</button>
-    <button data-choice="paper">✋ Paper</button>
-    <button data-choice="scissors">✌️ Scissors</button>
+    <button data-choice="fire">🔥 Fire</button>
+    <button data-choice="grass">🌾 Grass</button>
+    <button data-choice="water">💧 Water</button>
   </div>
   <div id="result"></div>
-
   <script>
-    const choices = ['rock','paper','scissors'];
-    const emoji = {rock:'✊', paper:'✋', scissors:'✌️'};
+    const choices = ['fire','grass','water'];
+    const emoji = { fire:'🔥', grass:'🌾', water:'💧' };
+    const rules = {
+      fire: 'grass',
+      grass: 'water',
+      water: 'fire'
+    };
     function decide(player, comp) {
       if (player === comp) return "It's a tie!";
-      if (
-        (player === 'rock' && comp === 'scissors') ||
-        (player === 'paper' && comp === 'rock') ||
-        (player === 'scissors' && comp === 'paper')
-      ) return "🎉 You win!";
+      if (rules[player] === comp) return "🎉 You win!";
       return "😞 You lose.";
     }
-    document.querySelectorAll('button').forEach(btn => {
+    document.querySelectorAll('button').forEach(btn =>
       btn.addEventListener('click', () => {
-        const player = btn.getAttribute('data-choice');
+        const player = btn.dataset.choice;
         const comp = choices[Math.floor(Math.random() * choices.length)];
-        document.getElementById('result').textContent =
-          `You: ${emoji[player]} vs Computer: ${emoji[comp]}. ${decide(player, comp)}`;
-      });
-    });
+        const msg = `You: ${emoji[player]} vs Comp: ${emoji[comp]}. ${decide(player, comp)}`;
+        document.getElementById('result').textContent = msg;
+      })
+    );
   </script>
 </body>
 </html>
-
